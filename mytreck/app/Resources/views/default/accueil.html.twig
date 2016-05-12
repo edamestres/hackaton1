@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+	    <div id="map" class="map col-md-6">	
+	    </div>
+		<div class="col-md-6">
+			{{ weather.temperature.value }}
+			<br/>
+			{{ weather.wind.speed.description  }}
+		</div>
+	</div>
+{% endblock %}
+{% block javascripts %}
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARQdADyw-HVA_PpYmXEs9N7yQOuxP5M50&callback=initMap">
+    </script>
+{% endblock %}

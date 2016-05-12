@@ -23,31 +23,7 @@ class ProfilController extends Controller
     public function showProfilAction()
     {
     	$em = $this->getDoctrine()->getManager();
-        $user = $this->container->get('security.context')->getToken()->getUser();
-
-        // Must point to composer's autoload file.
-      
-      
-      // Language of data (try your own language here!):
-      $lang = 'fr';
-
-      // Units (can be 'metric' or 'imperial' [default]):
-      $units = 'metric';
-
-      // Create OpenWeatherMap object. 
-      // Don't use caching (take a look into Examples/Cache.php to see how it works).
-      $owm = new OpenWeatherMap('2553ef1ea9863b1340bddf742eacb447');
-
-      try {
-        $weather = $owm->getWeather('Chartres', $units, $lang);
-      } catch(OWMException $e) {
-        echo 'OpenWeatherMap exception: ' . $e->getMessage() . ' (Code ' . $e->getCode() . ').';
-      } catch(\Exception $e) {
-        echo 'General exception: ' . $e->getMessage() . ' (Code ' . $e->getCode() . ').';
-      }
-
-      echo $weather->temperature;
-            
+      $user = $this->container->get('security.context')->getToken()->getUser();
 
       return $this->render('/default/profil.html.twig', array(
           'user' => $user
@@ -56,9 +32,9 @@ class ProfilController extends Controller
      public function modifyProfilAction(Request $request)
     {
     	$em = $this->getDoctrine()->getManager();
-        $user = $this->container->get('security.context')->getToken()->getUser();
-        $username = $request->request->get('username');
-        $email = $request->request->get('email');
+      $user = $this->container->get('security.context')->getToken()->getUser();
+      $username = $request->request->get('username');
+      $email = $request->request->get('email');
 
     	if (!empty($username))
     	{
