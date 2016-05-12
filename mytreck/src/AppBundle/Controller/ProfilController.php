@@ -21,7 +21,7 @@ class ProfilController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
-        var_dump($user);
+
         return $this->render('/default/profil.html.twig', array(
             'user' => $user
         ));
@@ -33,9 +33,15 @@ class ProfilController extends Controller
         $username = $request->request->get('username');
         $email = $request->request->get('email');
 
-    	$user->setUsername($username);
-   		$user->setEmail($email);
-
+    	if (!empty($username))
+    	{
+    		$user->setUsername($username);
+   		}
+   		if(!empty($email))
+   		{
+   			$user->setEmail($email);	
+   		}
+   		
         $em->persist($user);
         $em->flush();
 
