@@ -19,28 +19,28 @@ class ProfilController extends Controller
      */
     public function showProfilAction()
     {
-        $user = $this->getUser();
-
+    	$em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        var_dump($user);
         return $this->render('/default/profil.html.twig', array(
             'user' => $user
         ));
     }
      public function modifyProfilAction(Request $request)
     {
-        $user = $this->getUser();
+    	$em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
         $username = $request->request->get('username');
         $email = $request->request->get('email');
-        if (!empty($username))
-        {
-        	$user->setUsername($username);
-        }
-       	if (!empty($email))
-       	{
-       		$user->setEmail($email);
-       	}
-       	
-       $url = $this -> generateUrl('profil_user');
-       $response = new RedirectResponse($url);
-       return $response;
+
+    	$user->setUsername($username);
+   		$user->setEmail($email);
+
+        $em->persist($user);
+        $em->flush();
+
+       	$url = $this -> generateUrl('profil_user');
+       	$response = new RedirectResponse($url);
+       	return $response;
     }
 }
