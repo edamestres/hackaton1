@@ -1,4 +1,5 @@
 <?php
+
 // src/AppBundle/Entity/User.php
 
 namespace AppBundle\Entity;
@@ -24,4 +25,3 @@ class User extends BaseUser
         parent::__construct();
         // your own logic
     }
-}

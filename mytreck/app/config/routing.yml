@@ -8,5 +8,7 @@ profil_user:
 profil_modify:
     path:     /user/profil_check
     defaults:     { _controller: AppBundle:Profil:ModifyProfil }
+
+# app/config/routing.yml
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
