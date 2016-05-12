@@ -1,7 +1,7 @@
 function initMap() {
   var paris = {lat: 48.85, lng: 2.3};
   var chartres = {lat: 48.439758, lng: 1.468494};
-
+//parametres de la carte: centrage, scroll autorisé et zoom
   var map = new google.maps.Map(document.getElementById('map'), {
     center: paris,
     scrollwheel: true,

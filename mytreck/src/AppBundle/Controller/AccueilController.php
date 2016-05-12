@@ -36,7 +36,7 @@ class AccueilController extends Controller
 	$owm = new OpenWeatherMap('2553ef1ea9863b1340bddf742eacb447');
 
 	try {
-		$weather = $owm->getWeather('Chartres', $units, $lang);
+		$weather = $owm->getWeather(  'chartres' , $units, $lang);
 	} 
 	catch(OWMException $e) {
 	    echo 'OpenWeatherMap exception: ' . $e->getMessage() . ' (Code ' . $e->getCode() . ').';
@@ -44,9 +44,9 @@ class AccueilController extends Controller
 	catch(\Exception $e) {
 	    echo 'General exception: ' . $e->getMessage() . ' (Code ' . $e->getCode() . ').';
 	}
-
-	echo $weather->temperature;
-	        
+		$weather->city->lat=3;
+		$weather->city->lon=48;
+	        var_dump($weather);
 
 		return $this->render('/default/accueil.html.twig', array(
           'user' => $user,
