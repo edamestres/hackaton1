@@ -5,6 +5,7 @@ app:
 profil_user:
     path:     /user/profil
     defaults:     { _controller: AppBundle:Profil:ShowProfil }
+    
 profil_modify:
     path:     /user/profil_check
     defaults:     { _controller: AppBundle:Profil:ModifyProfil }
