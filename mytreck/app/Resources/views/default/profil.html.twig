@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div>Profil</div>
+{{ user.username }}
+<br/>
+{{ user.email }}
+<form action="{{ path("profil_modify") }}" method="post">
+	Modifier nom d'utilisateur:
+	<input type="string" name="username" value="{{ user.username }}"/>
+	Modifier Email:
+	<input type="string" name="email" value="{{ user.email }}"/>
+	<input type="submit" class="btn btn-info" value="{{ 'valider'|trans }}"/>
+</form>
+{% endblock %}
