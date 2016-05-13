@@ -14,6 +14,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Cmfcmf\OpenWeatherMap;
 use Cmfcmf\OpenWeatherMap\Exception as OWMException;
 use Vendor\autoload;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Ville;
 
 class ProfilController extends Controller
 {

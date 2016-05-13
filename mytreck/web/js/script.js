@@ -7,17 +7,20 @@ function initMap() {
     scrollwheel: true,
     zoom: 6
   });
-
+ var ctaLayer = new google.maps.KmlLayer({
+    url: 'http://googlemaps.github.io/js-v2-samples/ggeoxml/cta.kml',
+    map: map
+  });
   var directionsDisplay = new google.maps.DirectionsRenderer({
     map: map
   });
 
   // Set destination, origin and travel mode.
-  var request = {
-    destination: chartres,
-    origin: paris,
-    travelMode: google.maps.TravelMode.BICYCLING
-  };
+  // var request = {
+  //   destination: chartres,
+  //   origin: paris,
+  //   travelMode: google.maps.TravelMode.WALKING
+  // };
 
   // Pass the directions request to the directions service.
   var directionsService = new google.maps.DirectionsService();
