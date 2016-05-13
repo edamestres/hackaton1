@@ -5,6 +5,11 @@ app:
 view_accueil:
     path:     /accueil
     defaults:     { _controller: AppBundle:Accueil:ShowAccueil }
+
+accueil_check:
+    path:     /accueil_check
+    defaults:     { _controller: AppBundle:Accueil:modifyAccueil }
+
 profil_user:
     path:     /user/profil
     defaults:     { _controller: AppBundle:Profil:ShowProfil }
