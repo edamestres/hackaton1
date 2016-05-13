@@ -5,18 +5,60 @@
 	    <div id="map" class="map col-md-6">	
 	    </div>
 		<div class="col-md-6">
-			{{ weather.temperature.value }}
+			Voici le temps qu'il fait à {{ weathertab.city.name }} :
 			<br/>
-			{{ weather.wind.speed.description  }}
+			Température: {{ weathertab.temperature.value }} degrés
 			<br/>
-
+			{% if weathertab.wind.speed.description != '' %} {{ weathertab.wind.speed.description  }}
+			{% else %} le vent est de {{ weathertab.wind.speed.value }}{{ weathertab.wind.speed.unit }} d'orientation {{ weathertab.wind.direction.unit }}
+			{% endif %}
+			
+			<br/>
+			<img src="{{ weathertab.weather.iconUrl }}" alt="temps"/>
+			{{ weathertab.weather.description }}
 			{# {{ user.email }} #}
 
 			<form method="POST" action="{{ path('accueil_check') }}">
-      			<input type="text" name="ville">
+      			<select type="text" name="ville">
+      				<option></option>
+      				<option>Orleans</option>
+      				<option>Chartres</option>
+      				<option>Fontainebleau</option>
+      				<option>Tours</option>
+      				<option>Le mans</option>
+      				<option>Lille</option>
+      				<option>Versailles</option>
+      				<option>Angers</option>
+      				<option>Reims</option>
+      				<option>Dreux</option>
+  				</select>
       			<input type="submit" value="valider">
     		</form>
 
+    		{% if tabville.ville == "Orleans" %}
+    			Voici le trek le plus proche d'Orléans <div id="ville">http://www.petit-fichier.fr/2016/05/12/moind30/moind30.kml</div> 
+    		{% elseif tabville.ville == "Chartres" %} 
+    			Voici le trek le plus proche de Chartres <div id="ville">http://www.petit-fichier.fr/2016/05/12/lol/lol.kml</div>
+    		{% elseif tabville.ville == "Paris" %} 
+    			Voici le trek le plus proche de Paris <div id="ville">http://www.petit-fichier.fr/2016/05/12/lol/lol.kml</div>
+    		{% elseif tabville.ville == "Fontainebleau" %} 
+    			Voici le trek le plus proche de Fontainebleau <div id="ville">http://www.petit-fichier.fr/2016/05/12/lol/lol.kml</div>
+    		{% elseif tabville.ville == "Tours" %} 
+    			Voici le trek le plus proche de Tours<div id="ville">http://www.petit-fichier.fr/2016/05/12/lol/lol.kml</div>
+    		{% elseif tabville.ville == "Le Mans" %} 
+    			Voici le trek le plus proche du Mans <div id="ville">http://www.petit-fichier.fr/2016/05/12/lol/lol.kml</div>
+    		{% elseif tabville.ville == "Lille" %} 
+    			Voici le trek le plus proche de Lille <div id="ville">http://www.petit-fichier.fr/2016/05/12/lol/lol.kml</div>
+    		{% elseif tabville.ville == "Versailles" %} 
+    			Voici le trek le plus proche de Versailles <div id="ville">http://www.petit-fichier.fr/2016/05/12/lol/lol.kml</div>
+    		{% elseif tabville.ville == "Angers" %} 
+    			Voici le trek le plus proche d'Angers <div id="ville">http://www.petit-fichier.fr/2016/05/12/lol/lol.kml</div> 
+    		{% elseif tabville.ville == "Reims" %} 
+    			Voici le trek le plus proche de Reims <div id="ville">http://www.petit-fichier.fr/2016/05/12/lol/lol.kml</div>
+    		{% elseif tabville.ville == "Dreux" %} 
+    			Voici le trek le plus proche de Dreux <div id="ville">http://www.petit-fichier.fr/2016/05/12/lol/lol.kml</div>
+    		{% endif %}
+    		<br/>
 		</div>
 	</div>
 {% endblock %}

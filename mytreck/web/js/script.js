@@ -3,12 +3,14 @@ function initMap() {
   var chartres = {lat: 48.439758, lng: 1.468494};
 //parametres de la carte: centrage, scroll autorisé et zoom
   var map = new google.maps.Map(document.getElementById('map'), {
-    center: paris,
+    center: chartres,
     scrollwheel: true,
-    zoom: 6
+    zoom: 8
   });
+  var ville = document.getElementById('ville');
+  var urlville = ville.innerText || ville.textContent;
  var ctaLayer = new google.maps.KmlLayer({
-    url: 'http://googlemaps.github.io/js-v2-samples/ggeoxml/cta.kml',
+    url: urlville,
     map: map
   });
   var directionsDisplay = new google.maps.DirectionsRenderer({

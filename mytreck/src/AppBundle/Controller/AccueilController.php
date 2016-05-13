@@ -26,7 +26,7 @@ class AccueilController extends Controller
 		$tabville = $em->getRepository('AppBundle:Ville')->findOneByIdUser($user->getId());
 		// Must point to composer's autoload file.
 
-		var_dump($tabville);
+
 		
 		$ville = $tabville->getVille();
 
@@ -62,11 +62,12 @@ class AccueilController extends Controller
 
 		
 
-		
+				var_dump($weather);
 
 		return $this->render('/default/accueil.html.twig', array(
 			'user' => $user,
-			'weather' => $weather,
+			'weathertab' => $weather,
+			'tabville' => $tabville,
 		));
 	}
 
