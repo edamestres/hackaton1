@@ -8,6 +8,25 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+    
+<header>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">MyTreck</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="glyphicon"><a href="{{ path ('view_accueil') }}">Accueil</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ path('profil_user') }}"><span class="glyphicon "></span>Profil</a></li>
+                <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon "></span>Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+</header>
+
         {% block body %}{% endblock %}
             <script src="{{ asset('js/bootstrap.min.js') }}"></script>
             <script src="{{ asset('js/script.js') }}"></script>

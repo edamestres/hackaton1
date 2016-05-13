@@ -1,12 +1,48 @@
-html
+body
 {
-	
+        margin: 0;
+        padding: 0;
+        color:black;
+        font: "Helvetica Neue";
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
 }
+
+h2
+{
+        font-size: 2em;
+        font-weight:bold;
+        color: #b7db44;
+}
+.img1 {
+        width: 100vh;
+        height: 100vh;
+}
+
+p
+{
+        color: white;
+}
+a
+{
+        font-weight:bold;
+        color:#fff;
+}
+
+.glyphicon {
+        font-size: 30px;
+}
+
 .map
 {
-	height: 500px;
-	width: 50%;
+        height: 500px;
+        width: 45%;
+        position: center;
+        margin-left: 50px;
 }
+.navbar-nav {
+}
+
+
 #ville
 {
 	display: none;

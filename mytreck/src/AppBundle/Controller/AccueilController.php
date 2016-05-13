@@ -28,7 +28,7 @@ class AccueilController extends Controller
 
 
 		
-		$ville = $tabville->getVille();
+		$ville=$tabville->getVille();
 
 		if (empty($ville))
 		{
@@ -60,9 +60,6 @@ class AccueilController extends Controller
 			echo 'General exception: ' . $e->getMessage() . ' (Code ' . $e->getCode() . ').';
 		}
 
-		
-
-				var_dump($weather);
 
 		return $this->render('/default/accueil.html.twig', array(
 			'user' => $user,
