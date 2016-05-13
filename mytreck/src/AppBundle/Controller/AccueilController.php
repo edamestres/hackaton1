@@ -25,63 +25,65 @@ class AccueilController extends Controller
 		$user = $this->container->get('security.context')->getToken()->getUser();
 		$tabville = $em->getRepository('AppBundle:Ville')->findOneByIdUser($user->getId());
 		// Must point to composer's autoload file.
-		 if (empty($ville))
-	      {
-	      	$tabville = new Ville();
-	      	$tabville->setIdUser($user->getId());
-	      	$tabville->setVille("chartres");
-	      }  
-			$ville = $tabville->getVille();
-	     
+
+		if (empty($ville))
+		{
+			$tabville = new Ville();
+			$tabville->setIdUser($user->getId());
+			$tabville->setVille("chartres");
+		}
+		$ville = $tabville->getVille();
+
 		// Language of data (try your own language here!):
 		$lang = 'fr';
 
 		// Units (can be 'metric' or 'imperial' [default]):
 		$units = 'metric';
 
-		// Create OpenWeatherMap object. 
+		// Create OpenWeatherMap object.
 		// Don't use caching (take a look into Examples/Cache.php to see how it works).
 		$owm = new OpenWeatherMap('2553ef1ea9863b1340bddf742eacb447');
-		
+
 		try {
 			$weather = $owm->getWeather( $ville  , $units, $lang);
-		} 
-		catch(OWMException $e) {
-		    echo 'OpenWeatherMap exception: ' . $e->getMessage() . ' (Code ' . $e->getCode() . ').';
-		} 
-		catch(\Exception $e) {
-		    echo 'General exception: ' . $e->getMessage() . ' (Code ' . $e->getCode() . ').';
 		}
-			
-		            var_dump($weather);
+		catch(OWMException $e) {
+			echo 'OpenWeatherMap exception: ' . $e->getMessage() . ' (Code ' . $e->getCode() . ').';
+		}
+		catch(\Exception $e) {
+			echo 'General exception: ' . $e->getMessage() . ' (Code ' . $e->getCode() . ').';
+		}
 
-			return $this->render('/default/accueil.html.twig', array(
-          'user' => $user,
-          'weather' => $weather,
-      ));
+		var_dump($weather);
+
+		return $this->render('/default/accueil.html.twig', array(
+			'user' => $user,
+			'weather' => $weather,
+		));
 	}
 
 	public function modifyAccueilAction (Request $request)
 	{
 		$em = $this->getDoctrine()->getManager();
-    	$user = $this->container->get('security.context')->getToken()->getUser();
+		$user = $this->container->get('security.context')->getToken()->getUser();
 
-    	$tabville = $em->getRepository('AppBundle:Ville')->findOneByIdUser($user->getId());
+		$tabville = $em->getRepository('AppBundle:Ville')->findOneByIdUser($user->getId());
 
-    	$ville = $request->request->get('ville');
-    	 if (empty($ville))
-	      {
-	      	$ville="chartres";
-	      }
-    	$tabville->setIdUser($user->getId());
-    	$tabville->setVille($ville);
+		$ville = $request->request->get('ville');
+		if (empty($ville))
+		{
+			$ville="chartres";
+		}
+		$tabville->setIdUser($user->getId());
+		$tabville->setVille($ville);
 
-    	$em->persist($tabville);
-        $em->flush();
+		$em->persist($tabville);
+		$em->flush();
 
-	 	$url = $this -> generateUrl('view_accueil');
-        $response = new RedirectResponse($url);
-        return $response;
+		$url = $this -> generateUrl('view_accueil');
+		$response = new RedirectResponse($url);
+		return $response;
 	}
 
 }
+

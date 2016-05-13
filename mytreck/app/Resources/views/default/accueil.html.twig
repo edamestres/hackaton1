@@ -9,10 +9,14 @@
 			<br/>
 			{{ weather.wind.speed.description  }}
 			<br/>
+
+			{# {{ user.email }} #}
+
 			<form method="POST" action="{{ path('accueil_check') }}">
       			<input type="text" name="ville">
       			<input type="submit" value="valider">
     		</form>
+
 		</div>
 	</div>
 {% endblock %}
