@@ -54,7 +54,10 @@ class AccueilController extends Controller
 			echo 'General exception: ' . $e->getMessage() . ' (Code ' . $e->getCode() . ').';
 		}
 
-		var_dump($weather);
+		var_dump($tabville);
+
+		$em->persist($tabville);
+		$em->flush();
 
 		return $this->render('/default/accueil.html.twig', array(
 			'user' => $user,
