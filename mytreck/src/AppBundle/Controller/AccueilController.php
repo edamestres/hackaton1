@@ -25,12 +25,14 @@ class AccueilController extends Controller
 		$user = $this->container->get('security.context')->getToken()->getUser();
 		$tabville = $em->getRepository('AppBundle:Ville')->findOneByIdUser($user->getId());
 		// Must point to composer's autoload file.
-		$ville = $tabville->getVille();
-	      if (empty($ville))
+		 if (empty($ville))
 	      {
-	      	$ville="chartres";
+	      	$tabville = new Ville();
+	      	$tabville->setIdUser($user->getId());
+	      	$tabville->setVille("chartres");
 	      }  
-	
+			$ville = $tabville->getVille();
+	     
 		// Language of data (try your own language here!):
 		$lang = 'fr';
 
