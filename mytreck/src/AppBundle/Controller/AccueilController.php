@@ -26,13 +26,19 @@ class AccueilController extends Controller
 		$tabville = $em->getRepository('AppBundle:Ville')->findOneByIdUser($user->getId());
 		// Must point to composer's autoload file.
 
+		var_dump($tabville);
+		
+		$ville = $tabville->getVille();
+
 		if (empty($ville))
 		{
 			$tabville = new Ville();
 			$tabville->setIdUser($user->getId());
 			$tabville->setVille("chartres");
+			$em->persist($tabville);
+			$em->flush();
 		}
-		$ville = $tabville->getVille();
+		
 
 		// Language of data (try your own language here!):
 		$lang = 'fr';
@@ -54,10 +60,9 @@ class AccueilController extends Controller
 			echo 'General exception: ' . $e->getMessage() . ' (Code ' . $e->getCode() . ').';
 		}
 
-		var_dump($user);
+		
 
-		$em->persist($tabville);
-		$em->flush();
+		
 
 		return $this->render('/default/accueil.html.twig', array(
 			'user' => $user,
