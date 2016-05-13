@@ -56,6 +56,9 @@ class AccueilController extends Controller
 
 		var_dump($user);
 
+		$em->persist($tabville);
+		$em->flush();
+
 		return $this->render('/default/accueil.html.twig', array(
 			'user' => $user,
 			'weather' => $weather,
