@@ -46,12 +46,13 @@ class AccueilController extends Controller
 	}
 
 	echo $weather->temperature;
-	        
 
+		//var_dump($user);
 		return $this->render('/default/accueil.html.twig', array(
           'user' => $user,
           'weather' => $weather,
       ));
+
 	}
 
 }
