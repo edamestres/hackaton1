@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Ville
+ * Ville.
  *
  * @ORM\Table(name="ville")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\VilleRepository")
@@ -35,11 +35,10 @@ class Ville
      */
     private $ville;
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -47,9 +46,10 @@ class Ville
     }
 
     /**
-     * Set idUser
+     * Set idUser.
      *
-     * @param integer $idUser
+     * @param int $idUser
+     *
      * @return Ville
      */
     public function setIdUser($idUser)
@@ -60,9 +60,9 @@ class Ville
     }
 
     /**
-     * Get idUser
+     * Get idUser.
      *
-     * @return integer 
+     * @return int
      */
     public function getIdUser()
     {
@@ -70,9 +70,10 @@ class Ville
     }
 
     /**
-     * Set ville
+     * Set ville.
      *
      * @param string $ville
+     *
      * @return Ville
      */
     public function setVille($ville)
@@ -83,9 +84,9 @@ class Ville
     }
 
     /**
-     * Get ville
+     * Get ville.
      *
-     * @return string 
+     * @return string
      */
     public function getVille()
     {
