@@ -2,94 +2,79 @@
 
 namespace AppBundle\Controller;
 
-use FOS\UserBundle\FOSUserEvents;
-use FOS\UserBundle\Event\FormEvent;
-use FOS\UserBundle\Event\FilterUserResponseEvent;
-use FOS\UserBundle\Event\GetResponseUserEvent;
-use FOS\UserBundle\Model\UserInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Ville;
 use Cmfcmf\OpenWeatherMap;
 use Cmfcmf\OpenWeatherMap\Exception as OWMException;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Vendor\autoload;
-use AppBundle\Entity\Ville;
-use AppBundle\Entity\User;
 
 class AccueilController extends Controller
 {
-	public function showAccueilAction ()
-	{
-		$em = $this->getDoctrine()->getManager();
-		$user = $this->container->get('security.context')->getToken()->getUser();
-		$tabville = $em->getRepository('AppBundle:Ville')->findOneByIdUser($user->getId());
-		// Must point to composer's autoload file.
+    public function showAccueilAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $tabville = $em->getRepository('AppBundle:Ville')->findOneByIdUser($user->getId());
+        // Must point to composer's autoload file.
 
+        $ville = $tabville->getVille();
 
-		
-		$ville=$tabville->getVille();
+        if (empty($ville)) {
+            $tabville = new Ville();
+            $tabville->setIdUser($user->getId());
+            $tabville->setVille('chartres');
+            $em->persist($tabville);
+            $em->flush();
+        }
 
-		if (empty($ville))
-		{
-			$tabville = new Ville();
-			$tabville->setIdUser($user->getId());
-			$tabville->setVille("chartres");
-			$em->persist($tabville);
-			$em->flush();
-		}
-		
+        // Language of data (try your own language here!):
+        $lang = 'fr';
 
-		// Language of data (try your own language here!):
-		$lang = 'fr';
+        // Units (can be 'metric' or 'imperial' [default]):
+        $units = 'metric';
 
-		// Units (can be 'metric' or 'imperial' [default]):
-		$units = 'metric';
+        // Create OpenWeatherMap object.
+        // Don't use caching (take a look into Examples/Cache.php to see how it works).
+        $owm = new OpenWeatherMap('2553ef1ea9863b1340bddf742eacb447');
 
-		// Create OpenWeatherMap object.
-		// Don't use caching (take a look into Examples/Cache.php to see how it works).
-		$owm = new OpenWeatherMap('2553ef1ea9863b1340bddf742eacb447');
+        try {
+            $weather = $owm->getWeather($ville, $units, $lang);
+        } catch (OWMException $e) {
+            echo 'OpenWeatherMap exception: '.$e->getMessage().' (Code '.$e->getCode().').';
+        } catch (\Exception $e) {
+            echo 'General exception: '.$e->getMessage().' (Code '.$e->getCode().').';
+        }
 
-		try {
-			$weather = $owm->getWeather( $ville  , $units, $lang);
-		}
-		catch(OWMException $e) {
-			echo 'OpenWeatherMap exception: ' . $e->getMessage() . ' (Code ' . $e->getCode() . ').';
-		}
-		catch(\Exception $e) {
-			echo 'General exception: ' . $e->getMessage() . ' (Code ' . $e->getCode() . ').';
-		}
+        return $this->render('/default/accueil.html.twig', [
+            'user'       => $user,
+            'weathertab' => $weather,
+            'tabville'   => $tabville,
+        ]);
+    }
 
+    public function modifyAccueilAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
 
-		return $this->render('/default/accueil.html.twig', array(
-			'user' => $user,
-			'weathertab' => $weather,
-			'tabville' => $tabville,
-		));
-	}
+        $tabville = $em->getRepository('AppBundle:Ville')->findOneByIdUser($user->getId());
 
-	public function modifyAccueilAction (Request $request)
-	{
-		$em = $this->getDoctrine()->getManager();
-		$user = $this->container->get('security.context')->getToken()->getUser();
+        $ville = $request->request->get('ville');
+        if (empty($ville)) {
+            $ville = 'chartres';
+        }
+        $tabville->setIdUser($user->getId());
+        $tabville->setVille($ville);
 
-		$tabville = $em->getRepository('AppBundle:Ville')->findOneByIdUser($user->getId());
+        $em->persist($tabville);
+        $em->flush();
 
-		$ville = $request->request->get('ville');
-		if (empty($ville))
-		{
-			$ville="chartres";
-		}
-		$tabville->setIdUser($user->getId());
-		$tabville->setVille($ville);
+        $url = $this->generateUrl('view_accueil');
+        $response = new RedirectResponse($url);
 
-		$em->persist($tabville);
-		$em->flush();
-
-		$url = $this -> generateUrl('view_accueil');
-		$response = new RedirectResponse($url);
-		return $response;
-	}
-
+        return $response;
+    }
 }
-
